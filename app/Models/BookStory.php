@@ -11,9 +11,7 @@ class BookStory extends Model
 
     protected $table = 'book_stories';
 
-    protected $primaryKey = 'name';
-
-    protected $fillable = ['ISBN', 'value'];
+    protected $fillable = ['name','ISBN', 'value'];
 
     public $timestamps = false;
 

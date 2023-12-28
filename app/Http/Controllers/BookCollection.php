@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\BookCollection;
-
+use App\Models\BookStory;
 
 class BookCollection extends Controller
 {
     public function getAll(Request $request) {
-        $books = BookCollection::paginate(5);
+        $books = BookStory::paginate(5);
         return $books;
     }
 
@@ -17,7 +16,7 @@ class BookCollection extends Controller
         $books = $request->books;
         foreach($books as $booking) {
 
-            BookCollection::create([
+            BookStory::create([
                 'name' => $booking['name'],
                 'ISBN' => $booking['ISBN'],
                 'value' => $booking['value']
@@ -28,7 +27,7 @@ class BookCollection extends Controller
     }
 
     public function update(Request $request, Variablename $name){
-        $books = BookCollection::findorFail($name);
+        $books = BookStory::findorFail($name);
         $books->name = $request->name;
         $books->ISBN = $request->ISBN;
         $books->value = $request->value;
@@ -38,7 +37,7 @@ class BookCollection extends Controller
     }
 
     public function destroy(Request $request){
-        $books = BookCollection::findorFail($name);
+        $books = BookStory::findorFail($name);
         if ($books->delete()){
             return response()->json([
                 'status' => 'Book Deleted!',

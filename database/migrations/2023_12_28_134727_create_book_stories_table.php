@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('book_stories', function (Blueprint $table) {
+            $table->id();
             $table->string('name');
             $table->bigInteger('ISBN');
             $table->float('value');
