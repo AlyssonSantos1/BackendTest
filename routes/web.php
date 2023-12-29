@@ -18,5 +18,3 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::view('/login', 'login.form')->name('login.form');
-Route::post('/auth', [AuthController::class, 'auth'])->name('login-auth');

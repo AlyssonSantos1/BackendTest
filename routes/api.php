@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookCollection;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +17,19 @@ use App\Http\Controllers\BookCollection;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+
     return $request->user();
+});
+
+Route::post('/login', function(Request $request) {
+
+    if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
+        $user = Auth::user();
+        $token = $user->createToken('JWT');
+        return response()->json($token->plainTextToken, 200);
+    }
+
+    return response()->json('Failed to Login', 400);
 });
 
 Route::get('/', [BookCollection::class, 'getAll']);
