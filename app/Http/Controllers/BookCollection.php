@@ -27,18 +27,33 @@ class BookCollection extends Controller
     }
 
     public function update(Request $request, int $id){
-        $books = BookStory::FindOrFail($id);
-        $books->name = $request->name;
-        $books->ISBN = $request->ISBN;
-        $books->value = $request->value;
-        $books->save();
+        $book = BookStory::FindOrFail($id);
 
-        return response()->json($books);
+        if(is_null($book)){
+            return response()->json([
+                'status' => 'book not found'
+            ]);
+        }
+
+        $book->name = $request->name;
+        $book->ISBN = $request->ISBN;
+        $book->value = $request->value;
+        $book->save();
+
+        return response()->json($book);
     }
 
     public function destroy(int $id){
-        $books = BookStory::FindOrFail($id);
-        if ($books->delete()){
+        $book = BookStory::FindOrFail($id);
+
+        if (is_null($book)) {
+            return response()->json([
+                'status' => 'Book not found'
+            ]);
+        }
+
+
+        if ($book->delete()){
             return response()->json([
                 'status' => 'Book Deleted!',
             ], 200);
