@@ -7,8 +7,8 @@ use App\Models\BookStory;
 
 class BookCollection extends Controller
 {
-    public function getAll(Request $request) {
-        $books = BookStory::paginate(5);
+    public function getAll() {
+        $books = BookStory::all();
         return $books;
     }
 
@@ -26,8 +26,8 @@ class BookCollection extends Controller
         return response()->json($booking);
     }
 
-    public function update(Request $request, Variablename $name){
-        $books = BookStory::findorFail($name);
+    public function update(Request $request, int $id){
+        $books = BookStory::FindOrFail($id);
         $books->name = $request->name;
         $books->ISBN = $request->ISBN;
         $books->value = $request->value;
@@ -36,8 +36,8 @@ class BookCollection extends Controller
         return response()->json($books);
     }
 
-    public function destroy(Request $request){
-        $books = BookStory::findorFail($name);
+    public function destroy(int $id){
+        $books = BookStory::FindOrFail($id);
         if ($books->delete()){
             return response()->json([
                 'status' => 'Book Deleted!',
