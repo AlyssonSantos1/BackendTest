@@ -40,6 +40,7 @@ class BookCollection extends Controller
         $book->value = $request->value;
         $book->save();
 
+
         return response()->json($book);
     }
 
